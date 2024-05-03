@@ -42,6 +42,9 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 app.get("/", (req, res) => {
+  //   res.send({
+  //     message: "Mock back for file-uploader is running!",
+  //   });
   res.send("mock back for file-uploader");
 });
 // Start the server
