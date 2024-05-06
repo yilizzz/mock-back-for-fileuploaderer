@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const app = express();
-const port = 3001; // You can use any port that is free on your system
+const port = 3001;
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -18,10 +18,9 @@ app.use((req, res, next) => {
 // Configure multer for file storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Make sure this directory exists or is created
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    // You can use the original name or add a timestamp for uniqueness
     cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
   },
 });
@@ -29,12 +28,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Define a POST route for file upload
-app.post("/upload", upload.single("file"), (req, res) => {
-  if (req.file) {
-    // File has been uploaded successfully
+app.post("/upload", upload.any(), (req, res) => {
+  if (req.files.length > 0) {
     res.status(200).send({
       message: "File uploaded successfully!",
-      file: req.file,
     });
   } else {
     res.status(400).send({ message: "Please upload a file." });
@@ -42,10 +39,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  //   res.send({
-  //     message: "Mock back for file-uploader is running!",
-  //   });
-  res.send("mock back for file-uploader");
+  res.send("I am a mock back for file-uploader");
 });
 // Start the server
 app.listen(port, () => {
