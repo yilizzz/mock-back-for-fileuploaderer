@@ -37,6 +37,17 @@ app.post("/upload", upload.any(), (req, res) => {
     res.status(400).send({ message: "Please upload a file." });
   }
 });
+// Define a POST route for formik and file upload
+app.post("/formik/upload", upload.any(), (req, res) => {
+  console.log(req.body);
+  if (req.files.length > 0) {
+    res.status(200).send({
+      message: "File uploaded successfully!",
+    });
+  } else {
+    res.status(400).send({ message: "Please upload a file." });
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("I am a mock back for file-uploader");
